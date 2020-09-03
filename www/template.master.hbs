@@ -1,0 +1,772 @@
+ <script id='BusquedaResultadoComponente-hbs' type='text/template'>{{#if no_encontrado}}
+	<div class="resultado-mensaje no-encontrado">
+		No se ha encontrado personal con DNI: "{{dni}}"
+	</div>
+{{else}}
+	{{#if registro_existente}}
+	<div class="resultado-mensaje encontrado-existente">
+		<b>REGISTRO EXISTENTE:  <i>{{hora}}</i></b>
+	</div>
+	{{else}}
+	<div class="resultado-mensaje encontrado">
+		<b>REGISTRO GUARDADO:  <i>{{hora}}</i></b>
+	</div>
+	{{/if}}
+	<ul class="table-view" style="padding-bottom: 20px;">
+		<li class="table-view-row">
+			<div>Nombres: </div>
+			<div>{{dni}} - {{nombres_apellidos}}</div>
+		</li>   
+		<li class="table-view-row">
+			<div>Labor: </div>
+			<div>{{labor}}</div>
+		</li>  
+	</ul>
+{{/if}}
+</script> <script id='FrmRegistroLaborView-hbs' type='text/template'>	<header class="bar bar-nav">
+            <a class="btn-bar btn-nav pull-left btn-back-img"  href="javascript:;" onclick="history.back();">
+                    <span class="icon icon-left-nav pull-left"></span>
+                    <img class="vertical-center" src="assets/img/logo-mini.png"/>
+            </a>
+            <div class="btn btn-nav dropdown pull-right" id="btn-menu">
+                <div class="dropdown-rotulo">{{nombre_usuario}}</div>
+            </div>
+            <h1 class="title">Registro Labor</h1>
+        </header>
+	<style type="text/css">
+
+		.row-trio{
+		  grid-template-columns: 40% 35% 25% !important;
+		}
+
+
+		input[type=number] {
+		    -webkit-box-sizing: border-box;
+		    -moz-box-sizing: border-box;
+		    box-sizing: border-box;
+		    padding: 0 10px;
+		    font-size: 16px;
+		    border-radius: 2px;
+		}
+
+		.bar input[type=number] {
+		    height: 35px;
+		   	margin: 6px 0;
+		}
+
+		.bar-standard form{
+			display: grid;
+		    margin: 0;
+		    padding: 0;
+		    grid-template-columns: 70% auto;
+		}
+
+		.resultado-mensaje{
+			padding: 10px 12px;
+		    color: white;
+		    font-size: 20px;
+    		margin-bottom: 8px;
+		}
+		.resultado-mensaje.no-encontrado{
+		    background-color: #ff4d4d;
+		    border: 2px solid #e99292;
+		}
+		.resultado-mensaje.encontrado{
+		    background-color: #5cb85c;
+		    border: 2px solid #8aba8a;
+		}
+
+		.resultado-mensaje.encontrado-existente{
+		    background-color: #f1cf29;
+		    border: 2px solid #8aba8a;
+		}
+
+		.content{
+			padding-top: 210px !important;
+		}
+
+		.table-view-row{
+			grid-template-columns: 33% auto;
+		}
+
+		.zona-registros{
+			font-size: 11.5px;
+		    text-align: center;
+			font-weight: bold;
+			padding: 2px;
+		}
+
+		.horatero{
+			background-color: white;
+		    margin: 0;
+		    padding: 10px 0px;
+		    border: 10px solid #33b5e5;
+			bottom: 0;
+		    position: absolute;
+		    width: 100%;
+		    right: 0;
+		    font-size: 3.5em;
+		    text-align: center;
+		    height: 80px;
+		}
+
+		.busqueda-resultado{
+			position: absolute;
+		    top: 130px;
+		    width: 100%;
+		    height: min-content;
+		    z-index: 100;
+		}
+
+		.busqueda-resultado-container{
+            margin: 0px 10px 10px 10px;
+		    background: white;
+		}
+
+		.lista-asistencia{
+			margin-top: 0px !important;
+			z-index: 99;
+		}
+
+		.table-view{
+			overflow-y: auto;
+    		height: 100%;
+		}
+
+		.table-view-cell{
+			padding: 5px 45px 5px 10px;
+		}
+
+		.labor{
+			text-overflow: ellipsis;
+		    white-space: nowrap;
+		    overflow: hidden;
+		    font-size: 12px;
+		}
+
+		.nombre{
+			line-height: 1.3;
+		}
+
+		.tipo-registro{
+			font-size: 12px;
+    		font-weight: bold;
+		}
+		
+		.content-listado{ 
+			height: 100%; 
+    		overflow: auto; 
+		} 
+ 
+        .badge-turno-enviado{ 
+            color: white !important; 
+            padding: 2px; 
+        } 
+ 
+        .btn-scan{
+        	font-size: 1.1em !important;
+        }
+
+        select{
+        	margin: 0
+        }
+
+        .btn-eliminar{
+        	position: absolute;
+		    right: 0;
+		    top: 0;
+		    padding: 8px 12.5px;
+		    background: #f33b3b;
+		    z-index: 200;
+		    -webkit-box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.75);
+			-moz-box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.75);
+			box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.75);
+        }
+	</style>
+
+	    <div class="bar bar-standard bar-header-secondary" style="height: 165px;">	 
+            {{#if_ idcultivo '>=' '900'}}
+	    	<div class="table-view-row">
+               <div>
+               		<b>Fecha</b>
+               		<small class="fecha">{{fecha_registro}}</small>
+               </div>
+               <div>
+               		<b>Área</b>
+               		<small class="lote"></small>
+               </div>
+           </div>
+            {{else}}
+            <div class="row-trio table-view-row">
+               <div>
+               		<b>Fecha</b>
+               		<small class="fecha">{{fecha_registro}}</small>
+               </div>
+               		<div>
+	                    <b>Cultivo</b>
+	                    <small class="cultivo"></small>
+		               </div>
+	               <div>
+	                    <b>Lote</b>
+	                    <small class="lote"></small>
+	               </div>
+            </div>
+            {{/if_}}
+
+
+            <div class="table-view-row row-full">
+                <div>
+                    <b>Seleccionar Labor</b>
+                    <select class="cbolabor"></select>
+                </div>
+            </div>
+
+	    	<form>
+			  <input type="number" placeholder="Ingresar DNI" maxlength="8" class="">
+			  <div class="zona-registros"><button class=" btn-scan btn btn-appbase btn-block">ESCANEAR</button></div>
+			</form>   		
+	    </div>
+	    <div class="content">	
+	    	<div class="content-listado"></div>    		    	 
+			<div class="busqueda-resultado"></div>
+	    </div></script> <script id='FrmRegistroSalidaView-hbs' type='text/template'>	<header class="bar bar-nav">
+           <a class="btn-bar btn-nav pull-left btn-back-img"  href="javascript:;" onclick="history.back();">
+                    <span class="icon icon-left-nav pull-left"></span>
+                    <img class="vertical-center" src="assets/img/logo-mini.png"/>
+            </a>
+            <div class="btn btn-nav dropdown pull-right" id="btn-menu">
+                <div class="dropdown-rotulo">{{nombre_usuario}}</div>
+            </div>
+            <h1 class="title">Registro de Salida</h1>
+        </header>
+	<style type="text/css">
+
+		.row-trio{
+		  grid-template-columns: 40% 35% 25% !important;
+		}
+
+		input[type=number] {
+		    -webkit-box-sizing: border-box;
+		    -moz-box-sizing: border-box;
+		    box-sizing: border-box;
+		    padding: 0 10px;
+		    font-size: 16px;
+		    border-radius: 2px;
+		}
+
+		.bar input[type=number] {
+		    height: 35px;
+		   	margin: 6px 0;
+		}
+
+		.bar-standard form{
+			display: grid;
+		    margin: 0;
+		    padding: 0;
+		    grid-template-columns: 70% auto;
+		}
+
+		.resultado-mensaje{
+			padding: 10px 12px;
+		    color: white;
+		    font-size: 20px;
+    		margin-bottom: 8px;
+		}
+		.resultado-mensaje.no-encontrado{
+		    background-color: #ff4d4d;
+		    border: 2px solid #e99292;
+		}
+		.resultado-mensaje.encontrado{
+		    background-color: #5cb85c;
+		    border: 2px solid #8aba8a;
+		}
+
+		.resultado-mensaje.encontrado-existente{
+		    background-color: #f1cf29;
+		    border: 2px solid #8aba8a;
+		}
+
+		.content{
+			padding-top: 200px !important;
+		}
+
+		.table-view-row{
+			grid-template-columns: 33% auto;
+		}
+
+		.zona-registros{
+			font-size: 11.5px;
+		    text-align: center;
+			font-weight: bold;
+			padding: 2px;
+		}
+
+		.horatero{
+			background-color: white;
+		    margin: 0;
+		    padding: 10px 0px;
+		    border: 10px solid #33b5e5;
+			bottom: 0;
+		    position: absolute;
+		    width: 100%;
+		    right: 0;
+		    font-size: 3.5em;
+		    text-align: center;
+		    height: 80px;
+		}
+
+		.busqueda-resultado{
+			position: absolute;
+		    top: 130px;
+		    width: 100%;
+		    height: min-content;
+		    z-index: 100;
+		}
+
+		.busqueda-resultado-container{
+            margin: 0px 10px 10px 10px;
+		    background: white;
+		}
+
+		.lista-asistencia{
+			margin-top: 0px !important;
+			z-index: 99;
+		}
+
+		.table-view{
+			overflow-y: auto;
+    		height: 100%;
+		}
+
+		.table-view-cell{
+			padding: 5px 45px 5px 10px;
+		}
+
+		.labor{
+			text-overflow: ellipsis;
+		    white-space: nowrap;
+		    overflow: hidden;
+		    font-size: 12px;
+		}
+
+		.nombre{
+			line-height: 1.3;
+		}
+
+		.tipo-registro{
+			font-size: 12px;
+    		font-weight: bold;
+		}
+ 
+		.content-listado{ 
+			height: 100%; 
+    		overflow: auto; 
+		} 
+ 
+        .badge-turno-enviado{ 
+            color: white !important; 
+            padding: 2px; 
+        } 
+ 
+        .btn-scan{
+        	font-size: 1.1em !important;
+        }
+
+        select{
+        	margin: 0
+        }
+
+        .btn-eliminar{
+        	position: absolute;
+		    right: 0;
+		    top: 0;
+		    padding: 8px 12.5px;
+		    background: #f33b3b;
+		    z-index: 200;
+		    -webkit-box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.75);
+			-moz-box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.75);
+			box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.75);
+        }
+
+        .toggle-tareado{
+        	width: 144px !important;
+        }
+
+        .toggle-tareado.active .toggle-handle{
+        	background-color: #0f6584;
+    		border-color: #1f4e5f;
+        }
+
+        .toggle-tareado .toggle-handle{
+        	width: 90px;
+			background-color: #2196F3;
+			border: 1px solid #2196F3;
+        }
+
+        .toggle-tareado.active:before {
+		    content: "JORNAL";
+		    right: 11px;
+		}
+
+		.toggle-tareado:before {
+		    content: "TAREAS";
+		 }
+
+		.toggle-hextras.active:before {
+		    content: "SÍ";
+		    right: 11px;
+		}
+
+		.toggle-hextras:before {
+		    content: "NO";
+		 }
+	</style>
+
+	    <div class="bar bar-standard bar-header-secondary" style="height: 155px;">	 
+            <ul class="table-view">
+            	<li class="table-view-cell">
+               		<b>Fecha: <span class="fecha">{{fecha_registro}}</span></b>
+            	</li>
+            	<li class="table-view-cell">
+				    <small>Modo de Trabajo:</small>
+				    <div class="toggle toggle-tareado active modo-tareado">
+				      <div class="toggle-handle"></div>
+				    </div>
+				</li>
+				<li class="table-view-cell">
+				    <small><i>Horas Extras:</i></small>
+				    <div class="toggle toggle-hextras modo-horasextras">
+				      <div class="toggle-handle"></div>
+				    </div>
+				</li>
+				<form>
+				  <input type="number" placeholder="Ingresar DNI" maxlength="8" class="">
+				  <div class="zona-registros"><button class=" btn-scan btn btn-appbase btn-block">ESCANEAR</button></div>
+				</form>  
+            </ul>
+	    	 		
+	    </div>
+	    <div class="content">	
+	    	<div class="content-listado"></div>    		    	 
+			<div class="busqueda-resultado"></div>
+	    </div></script> <script id='InicioView-hbs' type='text/template'>    	<header class="bar bar-nav">
+    		<div class="btn-bar btn-nav pull-left">
+    			<img class="vertical-center" src="assets/img/logo-mini.png"/>
+    		</div>
+            <div class="btn btn-nav dropdown pull-right" id="btn-menu">
+                <div class="dropdown-rotulo">{{nombre_usuario}}</div>
+                <div class="dropdown-content">
+                  <a href="javascript:;" id="btn-sincro-diario">Sincro. Diario</a>
+                  <a href="javascript:;" id="btn-actualizar">Sincronizar</a>
+                  <a href="javascript:;" onclick="cerrarSesion();">Cerrar Sesión</a>
+                </div>
+            </div>
+    		<h1 class="title">Inicio</h1>
+    	</header>
+
+        <style type="text/css">
+
+            #btn-sincro-diario{
+                background-color: #c6d134;
+                color: #464646;
+                font-weight: 900;
+            }
+            
+            .zona-enviar-datos{
+                position: absolute;
+                left: 0;
+                bottom: 0;
+                text-align: center;
+                min-height: 82px;
+                width: 100%;
+            }
+
+
+            .lista-dias li a{
+                text-align: center;
+                padding-right: 11px !important;
+                font-size: 1.1em;
+            }
+
+            .zona-btn-eliminar{
+                bottom: 0;
+                position: absolute;
+                left: 0;
+                right: 0;
+                margin: 0 10px;
+            }
+               
+        </style>
+
+
+    	<div class="content">
+    		<div class="content-padded text-center">
+                <h6 class="text-left">DÍAS DE REGISTRO</h6>
+                <ul class="table-view lista-dias"></ul>
+    		</div> 
+            <div class="zona-btn-eliminar">
+                 <button class="btn btn-block btn-negative btn-sm btn-limpiardias">LIMPIAR DÍAS ANTERIORES</button>
+            </div>   
+		</div>
+</script> <script id='ListaAsistenciaListView-hbs' type='text/template'><ul class="lista-asistencia table-view">
+	{{#each asistentes}}
+	<li class="table-view-cell cell-{{#if_ tipo_acceso '==' 'S'}}salida{{else}}entrada{{/if_}}">
+		{{#if_ estado_envio '<=' 1}}
+		<span data-nombre="{{nombres_apellidos}}" data-dnipersonal="{{dni}}" data-idlabor="{{idlabor}}" data-numeroacceso="{{numero_acceso}}" class="btn-eliminar icon icon-trash"></span>
+		{{/if_}}
+		<div class="nombre">({{indexerReverse ../total @index}}) {{dni}} - {{nombres_apellidos}} {{#if_ tipo_acceso '==' 'S'}} ({{modo_trabajo}}){{/if_}}</div>
+		<div class="labor">* {{labor}}</div>
+		<div class="tipo-registro">HORA: {{hora}}  | {{turno}}
+			{{#if_ estado_envio '>' 1}}
+			<span class="badge badge-turno-enviado bg-green"><b class="icon icon-check"></b></span>
+			{{/if_}}
+		</div>
+	</li> 
+	{{/each}}
+</ul></script> <script id='LoginView-hbs' type='text/template'>        <header class="bar bar-nav">
+          <div class="btn-bar btn-nav pull-left">
+            <img class="vertical-center" src="assets/img/logo-mini.png"/>
+          </div>
+          <div class="btn-base btn-nav dropdown pull-right" id="btn-sincronizar">
+                SINCRONIZAR
+            </div>
+          <h1 class="title">Acceder</h1>
+        </header>
+
+<div class="content">
+      <div class="content-padded text-center">
+        <div class="text-center">
+          <h2>{{nombre_app}}</h2>
+          <h4>UPO</h4>
+        </div>
+        <img src="assets/img/LOGO.png" class="img-logo-main">
+      </div>
+      <div class="card" style="padding: 16px;">
+        <form>
+              <input required type="text" id="txt-login" placeholder="Usuario">
+              <input required type="password" id="txt-clave" placeholder="Clave">
+              <button class="btn btn-block btn-appbase">ACCEDER</button>
+        </form>
+      </div>
+      
+</div></script> <script id='ModalMensajeComponente-hbs' type='text/template'><header class="bar bar-nav">
+	<h1 class="title title-modal-mensaje">{{titulo}}</h1>
+</header>
+<div class="block-progressbar" style="padding-top: 50px;">
+    <small>{{texto_informacion}}</small>
+    <div class="cargando">
+    	<img src="assets/img/cargando.gif" style="height: 35px;">
+    </div>
+</div></script> <script id='ProgressBarComponente-hbs' type='text/template'><header class="bar bar-nav">
+			<h1 class="title title-progressbar">{{titulo}}</h1>
+		</header>
+		<div class="block-progressbar">
+    		<small>{{texto_informacion}}</small>
+    		<progress value="{{valor}}" max="100" style="width: 90%;"></progress>
+    	</div></script> <script id='SeleccionCultivoView-hbs' type='text/template'>    	<header class="bar bar-nav">
+            <a class="btn-bar btn-nav pull-left btn-back-img"  href="javascript:;" onclick="history.back();">
+                    <span class="icon icon-left-nav pull-left"></span>
+                    <img class="vertical-center" src="assets/img/logo-mini.png"/>
+            </a>
+            <div class="btn btn-nav dropdown pull-right" id="btn-menu">
+                <div class="dropdown-rotulo">{{nombre_usuario}}</div>
+            </div>
+            <h1 class="title">Cultivos</h1>
+        </header>
+
+        <style type="text/css">
+
+        .badge-turno{
+            padding: 7.5px 12px !important;
+            font-size: 18px !important;
+            background: #ff4444 !important;
+            color: white !important;
+        }
+
+        .blk{
+            display: none;
+            padding-top: 1em;
+            overflow-y: scroll;
+        }
+
+        .blkactive{
+            display: block !important;
+        }
+
+        .zona-btn-salida{
+            bottom: 80px;
+            position: absolute;
+            left: 0;
+            right: 0;
+            margin: 0 10px;
+        }
+
+        .bar-tab{
+            bottom: 0;
+            top: unset;
+            height: 80px;
+        }
+
+        .bar-tab .tab-item {
+            color: black;
+        }
+
+        .bar-tab .tab-item .icon~.tab-label {
+            font-size: 16px;
+        }
+
+        .bar-tab .tab-item-disabled{
+            color: gray;
+        }
+
+        .bar-tab .tab-item-disabled:active {
+            background-color: #dddddd;
+        }
+
+        </style>
+
+    	<div class="content">
+    		<div class="content-padded text-center">    
+                <h4>Fecha Registro Labores</h4>		
+                <h3 class="fecha">{{fecha_registro}}</h3>
+                <!-- <button id="btnhabilitarcerrardia" class="btn btn-negative">ABRIR NUEVO DÍA</button> -->
+                <hr>
+                <div class="segmented-control">
+                  <a class="control-item active" id="tabcultivo" data-blk="cultivo">
+                    CULTIVOS
+                  </a>
+                  <a class="control-item" id="tabarea" data-blk="area">
+                    ÁREAS
+                  </a>
+                </div>
+                <div id="blkcultivo" class="blk blkactive">
+                    {{#cultivos}}
+                        <p>
+                            <button data-id="{{idcultivo}}" class="btncultivo btn btn-block btn-appbase">{{descripcion}}</button>
+                        </p>
+                    {{else}}
+                        <p>No hay cultivos asignados.</p>
+                    {{/cultivos}}
+                </div>
+                <div id="blkarea" class="blk">
+                    {{#areas}}
+                        <p>
+                            <button data-id="{{idcultivo}}" class="btncultivo btn btn-block btn-procesos">{{descripcion}}</button>
+                        </p>
+                    {{else}}
+                        <p>No hay áreas asignadas.</p>
+                    {{/areas}}
+                </div>
+    		</div>  
+
+            <div class="zona-btn-salida">
+                <a class="btn btn-block btn-negative" href="#registro-salida/{{fecha_registro_raw}}">REGISTRAR SALIDAS</a>
+            </div> 
+            <div class="bar bar-tab">
+                    <a class="tab-item enviar-datos" href="javascript:;">
+                        <span class="icon icon-download" style="font-size:30px"></span>
+                        <span class="tab-label" style="font-size:20px">ENVIAR DATOS</span>
+                    </a>
+            </div>
+		</div>
+</script> <script id='SeleccionLoteListView-hbs' type='text/template'>		<style type="text/css">
+			.lista-lotes{
+				padding: 0 10px;
+				overflow-x: auto;
+			}
+			.lista-lotes h6{
+				margin-top: 10px;
+			}
+
+		</style>
+		<h6>LISTADO</h6>
+		<ul class="table-view">
+		  {{#each this}}
+		  <li data-id="{{idlote}}" class="table-view-cell"> 
+		  	<a> {{descripcion}}</a>
+		  </li>
+		  {{/each}}
+		</ul></script> <script id='SeleccionLoteView-hbs' type='text/template'>    	<header class="bar bar-nav">
+            <a class="btn-bar btn-nav pull-left btn-back-img"  href="javascript:;" onclick="history.back();">
+                    <span class="icon icon-left-nav pull-left"></span>
+                    <img class="vertical-center" src="assets/img/logo-mini.png"/>
+            </a>
+            <div class="btn btn-nav dropdown pull-right" id="btn-menu">
+                <div class="dropdown-rotulo">{{nombre_usuario}}</div>
+                <div class="dropdown-content">
+                  <a href="javascript:;" id="btn-actualizar">Sincronizar</a>
+                  <a href="javascript:;" onclick="cerrarSesion();">Cerrar Sesión</a>
+                </div>
+            </div>
+            <h1 class="title">Lotes</h1>
+        </header>
+
+        <style type="text/css">
+
+        .badge-turno{
+            padding: 7.5px 12px !important;
+            font-size: 18px !important;
+            background: #ff4444 !important;
+            color: white !important;
+        }
+
+        .zona-btn-eliminar{
+            bottom: 0;
+            position: absolute;
+            left: 0;
+            right: 0;
+            margin: 0 10px;
+        }
+
+        .bar-tab{
+            bottom: 0;
+            top: unset;
+            height: 80px;
+        }
+
+        .bar-tab .tab-item {
+            color: black;
+        }
+
+        .bar-tab .tab-item .icon~.tab-label {
+            font-size: 16px;
+        }
+
+        .bar-tab .tab-item-disabled{
+            color: gray;
+        }
+
+        .bar-tab .tab-item-disabled:active {
+            background-color: #dddddd;
+        }
+
+        select {
+            margin: 0;
+        }
+
+
+        </style>
+
+    	<div class="content">
+                <div class="row-duo table-view-row">
+                    <div>
+                        <label>Fecha Registro</label>
+                        <h3 class="fecha">{{fecha_registro}}</h3>
+                    </div>
+                    <div>
+                        <label>{{#if_ idcultivo '>=' '900'}}Área{{else}}Cultivo{{/if_}}</label>
+                        <h3 class="cultivo">{{cultivo}}</h3>
+                    </div>
+                </div>
+                {{#if_ idcultivo '<' '900'}}
+                <div class="table-view-row row-full">
+                    <div>
+                        <label>Filtrar Campo</label>
+                        <select class="cbocampo"></select>
+                    </div>
+                </div>
+                {{/if_}}
+                <!-- <button id="btnhabilitarcerrardia" class="btn btn-negative">ABRIR NUEVO DÍA</button> -->
+                <div class="lista-lotes"></div>
+		</div>
+</script>

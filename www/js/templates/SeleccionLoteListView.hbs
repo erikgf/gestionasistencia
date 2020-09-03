@@ -1,0 +1,18 @@
+		<style type="text/css">
+			.lista-lotes{
+				padding: 0 10px;
+				overflow-x: auto;
+			}
+			.lista-lotes h6{
+				margin-top: 10px;
+			}
+
+		</style>
+		<h6>LISTADO</h6>
+		<ul class="table-view">
+		  {{#each this}}
+		  <li data-id="{{idlote}}" class="table-view-cell"> 
+		  	<a> {{descripcion}}</a>
+		  </li>
+		  {{/each}}
+		</ul>

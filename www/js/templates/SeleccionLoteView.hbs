@@ -1,0 +1,83 @@
+    	<header class="bar bar-nav">
+            <a class="btn-bar btn-nav pull-left btn-back-img"  href="javascript:;" onclick="history.back();">
+                    <span class="icon icon-left-nav pull-left"></span>
+                    <img class="vertical-center" src="assets/img/logo-mini.png"/>
+            </a>
+            <div class="btn btn-nav dropdown pull-right" id="btn-menu">
+                <div class="dropdown-rotulo">{{nombre_usuario}}</div>
+                <div class="dropdown-content">
+                  <a href="javascript:;" id="btn-actualizar">Sincronizar</a>
+                  <a href="javascript:;" onclick="cerrarSesion();">Cerrar Sesión</a>
+                </div>
+            </div>
+            <h1 class="title">Lotes</h1>
+        </header>
+
+        <style type="text/css">
+
+        .badge-turno{
+            padding: 7.5px 12px !important;
+            font-size: 18px !important;
+            background: #ff4444 !important;
+            color: white !important;
+        }
+
+        .zona-btn-eliminar{
+            bottom: 0;
+            position: absolute;
+            left: 0;
+            right: 0;
+            margin: 0 10px;
+        }
+
+        .bar-tab{
+            bottom: 0;
+            top: unset;
+            height: 80px;
+        }
+
+        .bar-tab .tab-item {
+            color: black;
+        }
+
+        .bar-tab .tab-item .icon~.tab-label {
+            font-size: 16px;
+        }
+
+        .bar-tab .tab-item-disabled{
+            color: gray;
+        }
+
+        .bar-tab .tab-item-disabled:active {
+            background-color: #dddddd;
+        }
+
+        select {
+            margin: 0;
+        }
+
+
+        </style>
+
+    	<div class="content">
+                <div class="row-duo table-view-row">
+                    <div>
+                        <label>Fecha Registro</label>
+                        <h3 class="fecha">{{fecha_registro}}</h3>
+                    </div>
+                    <div>
+                        <label>{{#if_ idcultivo '>=' '900'}}Área{{else}}Cultivo{{/if_}}</label>
+                        <h3 class="cultivo">{{cultivo}}</h3>
+                    </div>
+                </div>
+                {{#if_ idcultivo '<' '900'}}
+                <div class="table-view-row row-full">
+                    <div>
+                        <label>Filtrar Campo</label>
+                        <select class="cbocampo"></select>
+                    </div>
+                </div>
+                {{/if_}}
+                <!-- <button id="btnhabilitarcerrardia" class="btn btn-negative">ABRIR NUEVO DÍA</button> -->
+                <div class="lista-lotes"></div>
+		</div>

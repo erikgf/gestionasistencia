@@ -1,0 +1,106 @@
+    	<header class="bar bar-nav">
+            <a class="btn-bar btn-nav pull-left btn-back-img"  href="javascript:;" onclick="history.back();">
+                    <span class="icon icon-left-nav pull-left"></span>
+                    <img class="vertical-center" src="assets/img/logo-mini.png"/>
+            </a>
+            <div class="btn btn-nav dropdown pull-right" id="btn-menu">
+                <div class="dropdown-rotulo">{{nombre_usuario}}</div>
+            </div>
+            <h1 class="title">Cultivos</h1>
+        </header>
+
+        <style type="text/css">
+
+        .badge-turno{
+            padding: 7.5px 12px !important;
+            font-size: 18px !important;
+            background: #ff4444 !important;
+            color: white !important;
+        }
+
+        .blk{
+            display: none;
+            padding-top: 1em;
+            overflow-y: scroll;
+        }
+
+        .blkactive{
+            display: block !important;
+        }
+
+        .zona-btn-salida{
+            bottom: 80px;
+            position: absolute;
+            left: 0;
+            right: 0;
+            margin: 0 10px;
+        }
+
+        .bar-tab{
+            bottom: 0;
+            top: unset;
+            height: 80px;
+        }
+
+        .bar-tab .tab-item {
+            color: black;
+        }
+
+        .bar-tab .tab-item .icon~.tab-label {
+            font-size: 16px;
+        }
+
+        .bar-tab .tab-item-disabled{
+            color: gray;
+        }
+
+        .bar-tab .tab-item-disabled:active {
+            background-color: #dddddd;
+        }
+
+        </style>
+
+    	<div class="content">
+    		<div class="content-padded text-center">    
+                <h4>Fecha Registro Labores</h4>		
+                <h3 class="fecha">{{fecha_registro}}</h3>
+                <!-- <button id="btnhabilitarcerrardia" class="btn btn-negative">ABRIR NUEVO DÍA</button> -->
+                <hr>
+                <div class="segmented-control">
+                  <a class="control-item active" id="tabcultivo" data-blk="cultivo">
+                    CULTIVOS
+                  </a>
+                  <a class="control-item" id="tabarea" data-blk="area">
+                    ÁREAS
+                  </a>
+                </div>
+                <div id="blkcultivo" class="blk blkactive">
+                    {{#cultivos}}
+                        <p>
+                            <button data-id="{{idcultivo}}" class="btncultivo btn btn-block btn-appbase">{{descripcion}}</button>
+                        </p>
+                    {{else}}
+                        <p>No hay cultivos asignados.</p>
+                    {{/cultivos}}
+                </div>
+                <div id="blkarea" class="blk">
+                    {{#areas}}
+                        <p>
+                            <button data-id="{{idcultivo}}" class="btncultivo btn btn-block btn-procesos">{{descripcion}}</button>
+                        </p>
+                    {{else}}
+                        <p>No hay áreas asignadas.</p>
+                    {{/areas}}
+                </div>
+    		</div>  
+
+            <div class="zona-btn-salida">
+                <a class="btn btn-block btn-negative" href="#registro-salida/{{fecha_registro_raw}}">REGISTRAR SALIDAS</a>
+            </div> 
+            <div class="bar bar-tab">
+                    <a class="tab-item enviar-datos" href="javascript:;">
+                        <span class="icon icon-download" style="font-size:30px"></span>
+                        <span class="tab-label" style="font-size:20px">ENVIAR DATOS</span>
+                    </a>
+            </div>
+		</div>

@@ -1,0 +1,16 @@
+<ul class="lista-asistencia table-view">
+	{{#each asistentes}}
+	<li class="table-view-cell cell-{{#if_ tipo_acceso '==' 'S'}}salida{{else}}entrada{{/if_}}">
+		{{#if_ estado_envio '<=' 1}}
+		<span data-nombre="{{nombres_apellidos}}" data-dnipersonal="{{dni}}" data-idlabor="{{idlabor}}" data-numeroacceso="{{numero_acceso}}" class="btn-eliminar icon icon-trash"></span>
+		{{/if_}}
+		<div class="nombre">({{indexerReverse ../total @index}}) {{dni}} - {{nombres_apellidos}} {{#if_ tipo_acceso '==' 'S'}} ({{modo_trabajo}}){{/if_}}</div>
+		<div class="labor">* {{labor}}</div>
+		<div class="tipo-registro">HORA: {{hora}}  | {{turno}}
+			{{#if_ estado_envio '>' 1}}
+			<span class="badge badge-turno-enviado bg-green"><b class="icon icon-check"></b></span>
+			{{/if_}}
+		</div>
+	</li> 
+	{{/each}}
+</ul>
