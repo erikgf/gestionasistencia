@@ -1,0 +1,200 @@
+.navbar-0{
+	min-height: 65px;
+    padding: 10px 64px;
+    height: 85px;
+}
+
+.img-logo-izq{
+	width: 200px;
+}
+
+.navbar-link-right{
+	text-align: right;
+	line-height: 4.5;
+}
+
+.navbar-link-right a{
+	padding: 0px 10px;
+    font-weight: bold;
+}
+
+.navbar-link-right a:hover,.navbar-link-right a:active{
+    color: #9dc4e4;
+}
+
+.navbar-1{
+	padding-left: 64px;
+    padding-right: 64px;
+    background-image: linear-gradient(#e6e6e6, white, #e6e6e6, #e6e6e6);
+    color: white;
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12)!important;
+    margin-bottom:15px;
+}
+
+@media (min-width: 1350px){
+	.container {
+	    width: 1264px;
+	}
+}
+
+.navbar-1> .navbar-nav>li {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.navbar-1> .navbar-nav>li>a {
+  	padding-top: 5px;
+    color: black;
+    padding-bottom: 5px;
+    font-weight: bold;
+    border-radius: 1em;
+    -moz-border-radius: 1em;
+    -webkit-border-radius: 1em;
+}
+
+.navbar-1> .navbar-nav>li>a:hover,.navbar-1>.navbar-nav>li>a:active, .navbar-1> .nav .open>a, .nav .open>a:focus, .nav .open>a:hover {
+    background-color: #58d8cc;
+    background-image: linear-gradient(#188ada,#316ace);
+    color: white;
+}
+
+.navbar-nav>li>.dropdown-menu-cayalti{
+	margin-top: -10px !important;
+    border-radius: 1em;
+}
+
+.dropdown-menu-cayalti>li>a{
+	color: gray;
+    letter-spacing: 1px;
+    font-weight: bold;
+}
+
+
+footer{
+	padding-top: 20px;
+    background-color: #e6e6e6;
+    padding-bottom: 30px;
+    text-align: center;
+    font-size: 1.05em;
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12)!important;
+}
+
+.block-superior{
+	margin: 0 auto;
+    position: relative;
+    z-index: 0;
+    width: 100%;
+    height: 125px;
+    margin-top:15px;
+}
+
+.Header-jpeg{
+	position: absolute;
+    z-index: -1;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 250px;
+    background-image: url(../../imagenes/Header.jpg);
+    background-repeat: no-repeat;
+    background-position: left bottom;
+    border-radius: 10px;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+}
+
+.PageBackgroundGlare {
+    position: absolute;
+    width: 100%;
+    left: 0px;
+    top: 0px;
+    margin-top: 250px;
+}
+
+.PageBackgroundGlareImage {
+    background-image: url(../../imagenes/Header_gl.jpg);
+    background-repeat: no-repeat;
+    height: 72px;
+    width: 100%;
+    margin: 0;
+    border-radius: 10px;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+}
+
+.tabla-nueva{
+    font-size: .9em;
+    width: 100%;
+    margin: 0 auto;
+    clear: both;
+    border-collapse: separate;
+    border-spacing: 0;
+    border-bottom: 1px solid #111;
+}
+
+table.tabla-nueva thead {
+    cursor: pointer;
+    *cursor: hand;
+    background-repeat: no-repeat;
+    background-position: center right;
+}
+
+table.tabla-nueva thead th, table.tabla-nueva thead td {
+    padding: 10px 18px;
+    border-bottom: 1px solid #111;
+}
+
+table.tabla-nueva thead th, table.tabla-nueva tfoot th {
+    font-weight: bold;
+}
+
+table.tabla-nueva, table.tabla-nueva th, table.tabla-nueva td {
+    box-sizing: content-box;
+}
+
+table.tabla-nueva tbody th, table.tabla-nueva tbody td {
+    padding: 6px 10px;
+}
+
+table.tabla-nueva.row-border tbody tr:first-child th, table.tabla-nueva.row-border tbody tr:first-child td, table.tabla-nueva.display tbody tr:first-child th, table.tabla-nueva.display tbody tr:first-child td {
+    border-top: none;
+}
+
+table.tabla-nueva.row-border tbody th, table.tabla-nueva.row-border tbody td, table.tabla-nueva.display tbody th, table.tabla-nueva.display tbody td {
+    border-top: 1px solid #ddd;
+}
+
+.table-bordered, .table-bordered>tbody>tr>td, .table-bordered>tbody>tr>th, .table-bordered>tfoot>tr>td, .table-bordered>tfoot>tr>th, .table-bordered>thead>tr>td, .table-bordered>thead>tr>th {
+    border: 1px solid #ddd;
+}
+
+.tabla-campos tbody tr{
+        cursor: pointer;
+      }
+      .tabla-campos  tbody .tr-seleccionado {
+        background: #d9edf7;
+      }
+      .tabla-campos  tbody tr:hover{
+        background: #ececec;
+      }
+      .tabla-campos  tbody .tr-seleccionado:hover{
+        background: #c6d7d8;
+      }
+      .bloque-detalle{
+      }
+      .bloque-detalle p{
+        display: inline;
+      }
+
+      .btn-black{
+        color: white;
+        background: #565454;
+      }
+
+      .badge-success{
+        background-color: #5cb85c;
+      }
+
+      .badge-danger{
+        background-color: #d9534f;
+      }

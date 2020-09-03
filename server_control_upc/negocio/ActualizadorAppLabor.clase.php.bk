@@ -1,0 +1,189 @@
+<?php
+
+require_once '../datos/Conexion.clase.php';
+date_default_timezone_set('America/Lima');
+
+class ActualizadorAppLabor extends Conexion {
+
+    public function actualizarDatos(){
+        try {
+            $contador_registros  = 0;
+
+             $sql = "SELECT 
+                    u.dni,
+                    COALESCE(u.nombres_apellidos, p.nombres_apellidos, u.usuario) as nombres_apellidos,
+                    u.usuario,
+                    u.clave
+                    FROM usuario u
+                    LEFT JOIN personal p ON p.dni = u.dni";
+                    
+            $usuarios =  $this->consultarFilas($sql);
+            $contador_registros += count($usuarios);
+
+            $sql = "SELECT 
+                    idcultivo,
+                    descripcion,
+                    dni_responsable
+                    FROM cultivo";
+            $cultivos =  $this->consultarFilas($sql);
+            $contador_registros += count($cultivos);
+
+            $sql = "SELECT 
+                    idcultivo,
+                    dni_responsable
+                    FROM cultivo_usuario";
+            $cultivo_usuarios =  $this->consultarFilas($sql);
+            $contador_registros += count($cultivo_usuarios);
+
+            $sql = "SELECT 
+                        dni,
+                        nombres_apellidos
+                        FROM personal
+                        WHERE estado_mrcb";
+
+            $personal =  $this->consultarFilas($sql);
+            $contador_registros += count($personal);
+
+            $sql = "SELECT 
+                        idturno,
+                        descripcion,
+                        hora_entrada,
+                        hora_salida
+                        FROM turno";
+
+            $turnos =  $this->consultarFilas($sql);
+            $contador_registros += count($turnos);
+
+            $sql = "SELECT 
+                        idcampo,
+                        descripcion
+                        FROM campo";
+
+            $campos =  $this->consultarFilas($sql);
+            $contador_registros += count($campos);
+
+            $sql = "SELECT 
+                    idlote, descripcion, idcampo, idcultivo
+                    FROM lote";
+            $lotes =  $this->consultarFilas($sql);
+            $contador_registros += count($lotes);
+
+            $sql = "SELECT 
+                    idlabor, descripcion, idcultivo
+                    FROM labor";
+            $labores =  $this->consultarFilas($sql);
+            $contador_registros += count($labores);
+
+            return array("rpt"=>true,"data"=>["usuarios"=>$usuarios,
+                                                "campos"=>$campos,
+                                                "lotes"=>$lotes,
+                                                "labores"=>$labores,
+                                                "turnos"=>$turnos,
+                                                    "cultivos"=>$cultivos,
+                                                    "cultivousuarios"=>$cultivo_usuarios,
+                                                        "personal"=>$personal,
+                                                            "contador_registros"=>$contador_registros]);
+
+        } catch (Exception $exc) {
+            return array("rpt"=>false,"msj"=>$exc);
+        }
+    } 
+
+
+    public function enviarDatos($JSONData){
+        try {
+
+            $objDecoded = json_decode($JSONData);
+
+            $objCabecera = $objDecoded->cabecera;
+            $objDetalle = $objDecoded->detalle;
+
+            $this->beginTransaction();
+
+            $codRegistro = $this->consultarValor("SELECT COALESCE(MAX(id_cabecera)+1, 1) FROM registro_control_cabecera");
+
+            $campos_valores = [
+                    "id_cabecera"=>$codRegistro,
+                    "fecha_dia"=>$objCabecera->fecha_dia_envio,
+                    "usuario_envio"=>$objCabecera->usuario_envio,
+                    "idmovil"=>$objCabecera->movil_id,
+                    "idcultivo"=> $objCabecera->idcultivo
+                ];
+
+            $this->insert("registro_control_cabecera", $campos_valores);
+            $codRegistroDetalle = $this->consultarValor("SELECT COALESCE(MAX(id_detalle)+1, 1) FROM registro_control_detalle");
+
+            foreach ($objDetalle as $key => $detalle) {
+                $campos_valores_detalle = [
+                    "id_detalle" => $codRegistroDetalle,
+                    "id_cabecera" => $codRegistro,
+                    "dni_personal" => $detalle->dni_personal,
+                    "idturno" => 'D',//$detalle->idturno,
+                    "fecha_hora_registro" => $detalle->hora_registro,
+                    "idlote"=> $detalle->idlote,
+                    "idlabor"=> $detalle->idlabor
+                ];
+
+                $this->insert("registro_control_detalle", $campos_valores_detalle);
+                $codRegistroDetalle++;
+            }
+
+            $sql = "SELECT GROUP_CONCAT(t.dni_personal) FROM (SELECT CONCAT('\'',dni_personal,'\'') AS dni_personal FROM registro_control_detalle WHERE id_cabecera = :0 GROUP BY dni_personal HAVING COUNT(dni_personal) > 1) t";
+            $dniActualizarPorcentaje = $this->consultarValor($sql, [$codRegistro]);
+
+            if ($dniActualizarPorcentaje != NULL){
+                $sql = "UPDATE registro_control_detalle SET porcentaje = 0.5 WHERE id_cabecera = ".$codRegistro." AND dni_personal IN (".$dniActualizarPorcentaje.");";
+                $this->consulta_raw($sql); 
+            }
+
+            
+            /*
+            //CONSUTLAR ASI LA FECHA DE dia EXISTE
+            $sql = "SELECT COUNT(fecha_dia) > 0 FROM tbl_asistencia_dia WHERE fecha_dia = :0";
+            $existeDia = $this->consultarValor($sql, [$objCabecera->fecha_dia_envio]);
+
+            if ($existeDia == false){
+                $campos_valores = ["fecha_dia" => $objCabecera->fecha_dia_envio];
+                $this->insert("tbl_asistencia_dia", $campos_valores);
+            } 
+           
+            //CONSUTLAR ASI LA FECHA DE DIA/TURNO EXISTE
+            $sql = "SELECT COUNT(fecha_dia) > 0 FROM tbl_asistencia_dia_turno WHERE fecha_dia = :0 AND cod_turno = :1";
+            $existeDiaTurno = $this->consultarValor($sql, [$objCabecera->fecha_dia_envio, $objCabecera->cod_turno_envio]);
+
+            if ($existeDiaTurno == 0){
+                $campos_valores = ["fecha_dia" => $objCabecera->fecha_dia_envio, "cod_turno"=> $objCabecera->cod_turno_envio];
+                $this->insert("tbl_asistencia_dia_turno", $campos_valores);
+            }
+
+            //INSERTAR DETALLES
+            foreach ($objDetalle as $key => $detalle) {
+                $campos_valores = [
+                            "fecha_dia" => $objCabecera->fecha_dia_envio, 
+                            "cod_turno"=> $objCabecera->cod_turno_envio,
+                            "dni_asistencia"=> $detalle->dni_asistencia,
+                            "numero_asistencia" => $detalle->numero_asistencia,
+                            "tipo_registro" => $detalle->tipo_registro,
+                            "fecha_hora_registro" => $detalle->hora_registro
+                        ];
+
+                $this->insert("tbl_asistencia_dia_turno_detalle", $campos_valores);
+            }
+            */
+            $this->commit();
+            return array("rpt"=>true,"msj"=>"Data recibida correctamente.");
+        } catch (Exception $exc) {
+            return array("rpt"=>false,"msj"=>$exc);
+        }
+    }
+
+    public function masterKey(){
+        try {
+            $masterKey = md5('123456');
+            return array("rpt"=>true,"data"=>$masterKey);
+
+        } catch (Exception $exc) {
+            return array("rpt"=>false,"msj"=>$exc);
+        }
+    }
+}

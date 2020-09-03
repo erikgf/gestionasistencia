@@ -1,0 +1,70 @@
+<?php
+
+require_once '../datos/Conexion.clase.php';
+
+class ControlLabor extends Conexion {
+
+    public function listarFechas($fechaInicio, $fechaFin){
+        try {
+            
+
+            $sql = "SELECT 
+            distinct(fecha_dia) as fecha_raw, 
+            DATE_FORMAT(fecha_dia,'%d-%m-%Y') as fecha 
+            FROM registro_control_cabecera 
+            WHERE fecha_dia BETWEEN :0 AND :1 ORDER BY fecha_dia;";
+            $listaFechas = $this->consultarFilas($sql, [$fechaInicio, $fechaFin]);
+
+            return array("rpt"=>true,"data"=>$listaFechas);
+
+        } catch (Exception $exc) {
+            return array("rpt"=>false,"msj"=>$exc);
+        }
+    }  
+
+    public function listarFechasDetalle($fecha){
+        try {
+            /*con la fecha enviar el formato pertinente
+    FECHA   LABOR   TURNO   DNI CENTRO DE COSTO CANTIDAD    %   OBSERVACION     LOTE    APELLIDOS Y NOMBRES CULTIVO DESCRIPCION DE LABOR
+            */
+          $params = [];
+
+            if ($fecha == "*"){
+              $sqlFecha = " true ";
+            } else {
+              $params = [$fecha];
+              $sqlFecha = " cab.fecha_dia = :0 ";
+            }
+
+           $sql = "SELECT 
+           DATE_FORMAT(cab.fecha_dia,'%d/%m/%Y') as fecha,
+           cab.fecha_dia as fecha_raw,
+           l.idlabor as labor,
+           det.idturno as turno,
+           det.dni_personal as dni,
+           lot.cod_ceco as centro_costo,
+           '0' as cantidad,
+           det.porcentaje,
+           lot.descripcion as observacion,
+           lot.descripcion as lote,
+           p.nombres_apellidos as apellidos_nombres,
+           cul.descripcion as cultivo,
+           l.descripcion as descripcion_labor
+                FROM registro_control_detalle det
+                LEFT JOIN registro_control_cabecera cab ON cab.id_cabecera = det.id_cabecera
+               LEFT JOIN lote lot ON lot.idlote = det.idlote AND lot.idcultivo = cab.idcultivo
+                LEFT JOIN labor l ON l.idlabor = det.idlabor AND l.idcultivo = cab.idcultivo
+               LEFT JOIN cultivo cul ON cul.idcultivo = lot.idcultivo
+               LEFT JOIN personal p ON p.dni = det.dni_personal
+                WHERE ".$sqlFecha."
+                ORDER BY cab.fecha_dia, cab.idcultivo, det.fecha_hora_registro";
+            $lista = $this->consultarFilas($sql, $params);
+            
+            return array("rpt"=>true,"data"=>$lista);
+
+        } catch (Exception $exc) {
+            return array("rpt"=>false,"msj"=>$exc);
+        }
+    }  
+ 
+}

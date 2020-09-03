@@ -1,0 +1,52 @@
+[16-Sep-2019 15:03:21 America/Lima] PHP Fatal error:  Uncaught Error: Call to undefined method Personal::getId_personal() in /home/ayphutec/appcontrol.ayphutec.com/server_control_labores/negocio/Personal.clase.php:88
+Stack trace:
+#0 /home/ayphutec/appcontrol.ayphutec.com/server_control_labores/controlador/index-web.php(74): Personal->editar()
+#1 {main}
+  thrown in /home/ayphutec/appcontrol.ayphutec.com/server_control_labores/negocio/Personal.clase.php on line 88
+[16-Sep-2019 15:03:30 America/Lima] PHP Fatal error:  Uncaught Error: Call to undefined method Personal::getId_personal() in /home/ayphutec/appcontrol.ayphutec.com/server_control_labores/negocio/Personal.clase.php:88
+Stack trace:
+#0 /home/ayphutec/appcontrol.ayphutec.com/server_control_labores/controlador/index-web.php(74): Personal->editar()
+#1 {main}
+  thrown in /home/ayphutec/appcontrol.ayphutec.com/server_control_labores/negocio/Personal.clase.php on line 88
+[23-Sep-2019 07:36:18 America/Lima] PHP Notice:  Undefined property: stdClass::$cabecera in /home/ayphutec/appcontrol.ayphutec.com/server_control_labores/negocio/ActualizadorAppLabor.clase.php on line 144
+[23-Sep-2019 07:36:18 America/Lima] PHP Notice:  Undefined property: stdClass::$detalle in /home/ayphutec/appcontrol.ayphutec.com/server_control_labores/negocio/ActualizadorAppLabor.clase.php on line 145
+[23-Sep-2019 07:36:18 America/Lima] PHP Notice:  Trying to get property of non-object in /home/ayphutec/appcontrol.ayphutec.com/server_control_labores/negocio/ActualizadorAppLabor.clase.php on line 149
+[23-Sep-2019 07:36:18 America/Lima] PHP Notice:  Trying to get property of non-object in /home/ayphutec/appcontrol.ayphutec.com/server_control_labores/negocio/ActualizadorAppLabor.clase.php on line 150
+[23-Sep-2019 07:36:18 America/Lima] PHP Notice:  Trying to get property of non-object in /home/ayphutec/appcontrol.ayphutec.com/server_control_labores/negocio/ActualizadorAppLabor.clase.php on line 151
+[23-Sep-2019 07:36:18 America/Lima] PHP Notice:  Trying to get property of non-object in /home/ayphutec/appcontrol.ayphutec.com/server_control_labores/negocio/ActualizadorAppLabor.clase.php on line 152
+[23-Sep-2019 07:39:44 America/Lima] PHP Notice:  Undefined property: stdClass::$cabecera in /home/ayphutec/appcontrol.ayphutec.com/server_control_labores/negocio/ActualizadorAppLabor.clase.php on line 144
+[23-Sep-2019 07:39:44 America/Lima] PHP Notice:  Undefined property: stdClass::$detalle in /home/ayphutec/appcontrol.ayphutec.com/server_control_labores/negocio/ActualizadorAppLabor.clase.php on line 145
+[23-Sep-2019 07:39:44 America/Lima] PHP Notice:  Trying to get property of non-object in /home/ayphutec/appcontrol.ayphutec.com/server_control_labores/negocio/ActualizadorAppLabor.clase.php on line 149
+[23-Sep-2019 07:39:44 America/Lima] PHP Notice:  Trying to get property of non-object in /home/ayphutec/appcontrol.ayphutec.com/server_control_labores/negocio/ActualizadorAppLabor.clase.php on line 150
+[23-Sep-2019 07:39:44 America/Lima] PHP Notice:  Trying to get property of non-object in /home/ayphutec/appcontrol.ayphutec.com/server_control_labores/negocio/ActualizadorAppLabor.clase.php on line 151
+[23-Sep-2019 07:39:44 America/Lima] PHP Notice:  Trying to get property of non-object in /home/ayphutec/appcontrol.ayphutec.com/server_control_labores/negocio/ActualizadorAppLabor.clase.php on line 152
+[23-Sep-2019 07:42:36 America/Lima] PHP Notice:  Undefined property: stdClass::$cabecera in /home/ayphutec/appcontrol.ayphutec.com/server_control_labores/negocio/ActualizadorAppLabor.clase.php on line 144
+[23-Sep-2019 07:42:36 America/Lima] PHP Notice:  Undefined property: stdClass::$detalle in /home/ayphutec/appcontrol.ayphutec.com/server_control_labores/negocio/ActualizadorAppLabor.clase.php on line 145
+[23-Sep-2019 07:42:36 America/Lima] PHP Notice:  Trying to get property of non-object in /home/ayphutec/appcontrol.ayphutec.com/server_control_labores/negocio/ActualizadorAppLabor.clase.php on line 149
+[23-Sep-2019 07:42:36 America/Lima] PHP Notice:  Trying to get property of non-object in /home/ayphutec/appcontrol.ayphutec.com/server_control_labores/negocio/ActualizadorAppLabor.clase.php on line 150
+[23-Sep-2019 07:42:36 America/Lima] PHP Notice:  Trying to get property of non-object in /home/ayphutec/appcontrol.ayphutec.com/server_control_labores/negocio/ActualizadorAppLabor.clase.php on line 151
+[23-Sep-2019 07:42:36 America/Lima] PHP Notice:  Trying to get property of non-object in /home/ayphutec/appcontrol.ayphutec.com/server_control_labores/negocio/ActualizadorAppLabor.clase.php on line 152
+[23-Sep-2019 07:45:12 America/Lima] PHP Notice:  Undefined property: stdClass::$cabecera in /home/ayphutec/appcontrol.ayphutec.com/server_control_labores/negocio/ActualizadorAppLabor.clase.php on line 144
+[23-Sep-2019 07:45:12 America/Lima] PHP Notice:  Undefined property: stdClass::$detalle in /home/ayphutec/appcontrol.ayphutec.com/server_control_labores/negocio/ActualizadorAppLabor.clase.php on line 145
+[23-Sep-2019 07:45:12 America/Lima] PHP Notice:  Trying to get property of non-object in /home/ayphutec/appcontrol.ayphutec.com/server_control_labores/negocio/ActualizadorAppLabor.clase.php on line 149
+[23-Sep-2019 07:45:12 America/Lima] PHP Notice:  Trying to get property of non-object in /home/ayphutec/appcontrol.ayphutec.com/server_control_labores/negocio/ActualizadorAppLabor.clase.php on line 150
+[23-Sep-2019 07:45:12 America/Lima] PHP Notice:  Trying to get property of non-object in /home/ayphutec/appcontrol.ayphutec.com/server_control_labores/negocio/ActualizadorAppLabor.clase.php on line 151
+[23-Sep-2019 07:45:12 America/Lima] PHP Notice:  Trying to get property of non-object in /home/ayphutec/appcontrol.ayphutec.com/server_control_labores/negocio/ActualizadorAppLabor.clase.php on line 152
+[23-Sep-2019 07:50:20 America/Lima] PHP Notice:  Undefined property: stdClass::$cabecera in /home/ayphutec/appcontrol.ayphutec.com/server_control_labores/negocio/ActualizadorAppLabor.clase.php on line 144
+[23-Sep-2019 07:50:20 America/Lima] PHP Notice:  Undefined property: stdClass::$detalle in /home/ayphutec/appcontrol.ayphutec.com/server_control_labores/negocio/ActualizadorAppLabor.clase.php on line 145
+[23-Sep-2019 07:50:20 America/Lima] PHP Notice:  Trying to get property of non-object in /home/ayphutec/appcontrol.ayphutec.com/server_control_labores/negocio/ActualizadorAppLabor.clase.php on line 149
+[23-Sep-2019 07:50:20 America/Lima] PHP Notice:  Trying to get property of non-object in /home/ayphutec/appcontrol.ayphutec.com/server_control_labores/negocio/ActualizadorAppLabor.clase.php on line 150
+[23-Sep-2019 07:50:20 America/Lima] PHP Notice:  Trying to get property of non-object in /home/ayphutec/appcontrol.ayphutec.com/server_control_labores/negocio/ActualizadorAppLabor.clase.php on line 151
+[23-Sep-2019 07:50:20 America/Lima] PHP Notice:  Trying to get property of non-object in /home/ayphutec/appcontrol.ayphutec.com/server_control_labores/negocio/ActualizadorAppLabor.clase.php on line 152
+[23-Sep-2019 07:59:18 America/Lima] PHP Notice:  Undefined property: stdClass::$cabecera in /home/ayphutec/appcontrol.ayphutec.com/server_control_labores/negocio/ActualizadorAppLabor.clase.php on line 144
+[23-Sep-2019 07:59:18 America/Lima] PHP Notice:  Undefined property: stdClass::$detalle in /home/ayphutec/appcontrol.ayphutec.com/server_control_labores/negocio/ActualizadorAppLabor.clase.php on line 145
+[23-Sep-2019 07:59:18 America/Lima] PHP Notice:  Trying to get property of non-object in /home/ayphutec/appcontrol.ayphutec.com/server_control_labores/negocio/ActualizadorAppLabor.clase.php on line 149
+[23-Sep-2019 07:59:18 America/Lima] PHP Notice:  Trying to get property of non-object in /home/ayphutec/appcontrol.ayphutec.com/server_control_labores/negocio/ActualizadorAppLabor.clase.php on line 150
+[23-Sep-2019 07:59:18 America/Lima] PHP Notice:  Trying to get property of non-object in /home/ayphutec/appcontrol.ayphutec.com/server_control_labores/negocio/ActualizadorAppLabor.clase.php on line 151
+[23-Sep-2019 07:59:18 America/Lima] PHP Notice:  Trying to get property of non-object in /home/ayphutec/appcontrol.ayphutec.com/server_control_labores/negocio/ActualizadorAppLabor.clase.php on line 152
+[23-Sep-2019 08:09:27 America/Lima] PHP Notice:  Undefined property: stdClass::$cabecera in /home/ayphutec/appcontrol.ayphutec.com/server_control_labores/negocio/ActualizadorAppLabor.clase.php on line 144
+[23-Sep-2019 08:09:27 America/Lima] PHP Notice:  Undefined property: stdClass::$detalle in /home/ayphutec/appcontrol.ayphutec.com/server_control_labores/negocio/ActualizadorAppLabor.clase.php on line 145
+[23-Sep-2019 08:09:27 America/Lima] PHP Notice:  Trying to get property of non-object in /home/ayphutec/appcontrol.ayphutec.com/server_control_labores/negocio/ActualizadorAppLabor.clase.php on line 149
+[23-Sep-2019 08:09:27 America/Lima] PHP Notice:  Trying to get property of non-object in /home/ayphutec/appcontrol.ayphutec.com/server_control_labores/negocio/ActualizadorAppLabor.clase.php on line 150
+[23-Sep-2019 08:09:27 America/Lima] PHP Notice:  Trying to get property of non-object in /home/ayphutec/appcontrol.ayphutec.com/server_control_labores/negocio/ActualizadorAppLabor.clase.php on line 151
+[23-Sep-2019 08:09:27 America/Lima] PHP Notice:  Trying to get property of non-object in /home/ayphutec/appcontrol.ayphutec.com/server_control_labores/negocio/ActualizadorAppLabor.clase.php on line 152

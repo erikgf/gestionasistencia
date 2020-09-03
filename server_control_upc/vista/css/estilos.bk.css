@@ -1,0 +1,61 @@
+#sidebar.menu-min >  #sidebar-shortcuts > .menu-principal-label{
+	visibility: hidden;
+}
+
+.menu-principal-label{
+	font-size: .85em;
+    text-align: left;
+    padding: 15px;
+    background: #438eb9e0;
+    color: white;
+    font-weight: bold;
+}
+
+.loader {
+    width: 100%;
+    position: absolute;
+    z-index: 9999999;
+    height: 100%;
+    background: black;
+    opacity: .5;
+    display: none;
+}
+
+.loader.loader-on{
+    display: block;
+}
+
+.loader div{
+    left: 50%;
+    top: 50%;
+    position: absolute;    
+}
+
+.seleccionado-tr{
+    background-color: #b9d1e6 !important;
+}
+
+.creado-tr{
+   background-color: #b6dcaf !important;
+}
+
+input.ahp-valor{
+    transition: background-color ease-in-out .5s;
+}
+
+
+.matriz-efecto-sel{
+   background-color: #89b1c8 !important;
+   color: white;
+}
+
+.matriz-efecto-error {
+    background-color: #d15b47 !important;
+}
+
+.td-ordenador{
+    font-size: 2em;
+    color: white;
+    background-color: #d15b47;
+    text-align: center;
+}
